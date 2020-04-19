@@ -1,0 +1,56 @@
+{% extends "articles/base.html" %}
+
+
+{% block content %}
+    
+    <div class="py-5 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <span>Category</span>
+            <h3>All articles</h3>
+            <p>The most important articles are collected here!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section bg-white">
+      <div class="container">
+        <div class="row">
+          {% for article in articles %}
+          <div class="col-lg-4 mb-4">
+            <div class="entry2">
+              <a href="{% url 'articles:article' id=article.id %}"><img src="{{article.article_img.url}}" alt="Image" class="img-fluid rounded"></a>
+              <div class="excerpt">
+
+              <h2><a href="{% url 'articles:article' id=article.id %}">{{article.article_name}}</a></h2>
+              <div class="post-meta align-items-center text-left clearfix">
+                <figure class="author-figure mb-0 mr-3 float-left"><img src="images/person_1.jpg" alt="Image" class="img-fluid"></figure>
+                <span>&nbsp;-&nbsp; {{article.article_date}}</span>
+              </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        <div class="pagination">
+    <span class="step-links">
+        {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+        </span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+    </div>
+  </div>
+    
+{% endblock %}
